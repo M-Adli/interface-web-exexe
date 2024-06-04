@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Écran</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        /* Styles de base */
+        body {
+            background-color: #79d6e3; /* Couleur de fond douce */
+            color: #333; /* Couleur du texte */
+            font-family: 'Roboto', sans-serif; /* Police de caractère moderne */
+            margin: 0;
+            padding: 0;
+            height: 120vh; /* Hauteur de la vue */
+            display: flex; /* Aligner les éléments avec flex */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Conteneur pour les résultats */
+        .output-container {
+            background-color: white; /* Fond blanc */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(192, 20, 20, 0.15); /* Ombre douce */
+            width: 90%; /* Largeur */
+            max-width: 1000px; /* Largeur maximale */
+            height: 90vh; /* Hauteur du conteneur */
+            overflow-y: auto; /* Activer la barre de défilement verticale */
+            text-align: left; /* Alignement du texte à gauche */
+            transition: all 0.4s ease-in-out; /* Transition douce */
+            animation: fadeIn 1s ease-in; /* Animation d'apparition */
+        }
+
+        /* Animation d'apparition */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(50);
+            }
+        }
+
+        /* Animation du survol */
+        .output-container:hover {
+            transform: scale(1.1); /* Effet de zoom doux sur le survol */
+        }
+
+        /* Style pour les lignes commençant par ">>" */
+        .output-container span.red-text {
+    color: #d32f2f; /* Couleur rouge plus spécifique (rouge vif) */
+    font-weight: bold; /* Texte en gras */
+    font-size: 1.1rem; /* Taille de police légèrement plus grande */
+    letter-spacing: 0.5px; /* Espacement entre les lettres */
+    margin-top: 10px; /* Ajoute de l'espacement au-dessus de l'élément */
+    display: block; /* Chaque ligne de texte rouge occupera sa propre ligne */
+    /*white-space: pre-wrap; /* Permet de gérer l'espace blanc et les retours à la ligne */
+}
+
+
+ /* Style du bouton de retour */
+ #backButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF; /* Bleu */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #backButton:hover {
+            background-color: #0056b3; /* Couleur plus foncée lors du survol */
+        }
+
+        /* Style du bouton Enregistrer */
+        #saveButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #28a745; /* Vert */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #saveButton:hover {
+            background-color: #218838; /* Couleur plus foncée lors du survol */
+        }
+
+    </style>
+</head>
+<body>
+    <button id="backButton">Revenir à l'index</button>
+    <button id="saveButton">Enregistrer</button>
+    <!-- Conteneur pour afficher les résultats -->
+    <div class="output-container" id="output">
+        <!-- Les résultats seront affichés ici -->
+    </div>
+
+    <script>
+        // Fonction pour récupérer et afficher les résultats
+        function afficherResultats() {
+            // Récupérer les résultats stockés dans le stockage local
+            const resultats = localStorage.getItem('resultatsOutput');
+            
+            // Vérifier si les résultats existent
+            if (resultats) {
+                // Récupérer l'élément de sortie
+                const outputElement = document.getElementById('output');
+                
+                // Diviser les résultats en lignes
+                const lignes = resultats.split('\n');
+                
+                // Effacer le contenu existant
+                outputElement.innerHTML = '';
+                
+           // Parcourir chaque ligne, sauf les deux dernières, et ajouter le style approprié
+        for (let i = 0; i < lignes.length - 2; i++) {
+            const ligne = lignes[i];
+            const span = document.createElement('span');
+
+            // Vérifier si la ligne commence par ">>"
+            if (ligne.startsWith('>>')) {
+                span.className = 'red-text';
+            }
+
+            span.textContent = ligne;
+            outputElement.appendChild(span);
+            outputElement.appendChild(document.createElement('br'));
+        }
+    }else {
+                // Gérer les cas où les résultats ne sont pas disponibles
+                document.getElementById('output').innerText = 'Aucun résultat disponible.';
+            }
+        }
+
+        // Appeler la fonction afficherResultats lorsque la page est chargée
+        window.onload = afficherResultats;
+
+        // Écouter l'événement de clic sur le bouton pour revenir à l'index
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+
+        // Gestionnaire d'événements pour le bouton "Enregistrer"
+        document.getElementById('saveButton').addEventListener('click', function() {
+            // Récupérer le contenu de la div d'affichage
+            const outputContent = document.getElementById('output').innerText;
+            
+            // Créer une fenêtre de dialogue pour saisir le nom du fichier
+            const fileName = window.prompt("Saisissez le nom du fichier :");
+            
+            // Vérifier si un nom de fichier a été saisi
+            if (fileName !== null && fileName !== "") {
+                // Créer un lien de téléchargement avec le nom de fichier saisi
+                const downloadLink = document.createElement('a');
+                // Créer un objet Blob contenant le contenu
+                const blob = new Blob([outputContent], { type: 'text/plain' });
+                // Définir le lien de téléchargement
+                downloadLink.href = URL.createObjectURL(blob);
+                // Définir le nom de fichier
+                downloadLink.download = fileName + '.txt'; // Ajouter l'extension .txt
+                // Clic automatique sur le lien pour déclencher le téléchargement
+                downloadLink.click();
+            }
+        });
+
+    </script>
+</body>
+</html>

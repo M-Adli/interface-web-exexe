@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Code Exemples</title>
+
+    <!-- Inclure Prism.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+    <style>
+        
+      /* Styles de base */
+body {
+    background-color: #79d6e3; /* Couleur de fond douce */
+    color: #444; /* Couleur du texte (plus sombre pour éviter les conflits) */
+    font-family: 'Roboto', sans-serif; /* Police de caractère moderne */
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Conteneur pour les résultats */
+.output-container {
+    background-color: white; /* Fond blanc */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(192, 20, 20, 0.15); /* Ombre douce */
+    width: 90%; /* Largeur */
+    max-width: 1000px; /* Largeur maximale */
+    height: 90vh; /* Hauteur du conteneur */
+    overflow-y: auto; /* Activer la barre de défilement verticale */
+    text-align: left; /* Alignement du texte à gauche */
+    transition: all 0.4s ease-in-out; /* Transition douce */
+    animation: fadeIn 1s ease-in; /* Animation d'apparition */
+}
+
+
+ /* Style du bouton de retour */
+ #backButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF; /* Bleu */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #backButton:hover {
+            background-color: #0056b3; /* Couleur plus foncée lors du survol */
+        }
+
+        /* Animation d'apparition */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="backButton">Revenir à l'index</button>
+
+    <div class="output-container">
+        <h1>Code Prolog des exemples</h1>
+        <pre><code id="codeExemplesContent" class="language-prolog"></code></pre>
+    </div>
+
+   
+
+    <script>
+        // Obtenir le contenu de code_exemples.pl
+        fetch('/get-code-exemples')
+            .then(response => response.text())
+            .then(data => {
+                const codeElement = document.getElementById('codeExemplesContent');
+                codeElement.textContent = data;
+                setTimeout(() => {
+                    Prism.highlightElement(codeElement);
+                }, 100);
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération du contenu de code_exemples.pl :', error);
+            });
+
+        // Écouter l'événement de clic sur le bouton pour revenir à l'index
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+    </script>
+    
+    
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+init.
+leng(X,?(L))&leng(?(Y),?(L)).
+struct.
+postul.
+dci.
+simpl.
+o.
+dci.
+simpl.
+o.
+tout_es.
+depl_es.
+o.
+ofin.
+f.

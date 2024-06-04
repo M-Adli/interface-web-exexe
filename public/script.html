@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Script Combiné</title>
+
+    <!-- Inclure Prism.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+    <style>
+        /* Styles de base */
+body {
+    background-color: #79d6e3; /* Couleur de fond douce */
+    color: #444; /* Couleur du texte (plus sombre pour éviter les conflits) */
+    font-family: 'Roboto', sans-serif; /* Police de caractère moderne */
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Conteneur pour les résultats */
+.output-container {
+    background-color: white; /* Fond blanc */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(192, 20, 20, 0.15); /* Ombre douce */
+    width: 90%; /* Largeur */
+    max-width: 1000px; /* Largeur maximale */
+    height: 90vh; /* Hauteur du conteneur */
+    overflow-y: auto; /* Activer la barre de défilement verticale */
+    text-align: left; /* Alignement du texte à gauche */
+    transition: all 0.4s ease-in-out; /* Transition douce */
+    animation: fadeIn 1s ease-in; /* Animation d'apparition */
+    border: 2px solid #ccc; /* Bordure autour du cadre */
+}
+
+/* Style du bouton de retour */
+#backButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF; /* Bleu */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#backButton:hover {
+    background-color: #0056b3; /* Couleur plus foncée lors du survol */
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Taille de l'écriture pour le contenu du script */
+.language-prolog {
+    font-size: 18px; /* Taille de l'écriture agrandie */
+}
+
+        /* Animation d'apparition */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+         /* Style du bouton Enregistrer */
+         #saveButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #28a745; /* Vert */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #saveButton:hover {
+            background-color: #218838; /* Couleur plus foncée lors du survol */
+        }
+
+    
+    </style>
+</head>
+
+<body>
+
+    <button id="backButton">Revenir à l'index</button>
+    <button id="saveButton">Enregistrer</button>
+
+    <div class="output-container" id="output">
+        <h1>Script</h1>
+        <pre><code id="combinedScript" class="language-prolog"></code></pre>
+    </div>
+
+    <script>
+        // Récupérer le contenu combiné du script depuis le serveur
+        fetch('/afficher-script')
+            .then(response => response.text())
+            .then(scriptContent => {
+                // Mettre à jour le contenu du code source dans la page HTML
+                document.getElementById('combinedScript').textContent = scriptContent;
+                // Appliquer la coloration syntaxique avec Prism.js
+                Prism.highlightAll();
+            })
+            .catch(error => console.error('Erreur lors de la récupération du script combiné :', error));
+
+        // Écouter l'événement de clic sur le bouton pour revenir à l'index
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+         // Gestionnaire d'événements pour le bouton "Enregistrer"
+         document.getElementById('saveButton').addEventListener('click', function() {
+            // Récupérer le contenu de la div d'affichage
+            const outputContent = document.getElementById('output').innerText;
+            
+            // Créer une fenêtre de dialogue pour saisir le nom du fichier
+            const fileName = window.prompt("Saisissez le nom du fichier :");
+            
+            // Vérifier si un nom de fichier a été saisi
+            if (fileName !== null && fileName !== "") {
+                // Créer un lien de téléchargement avec le nom de fichier saisi
+                const downloadLink = document.createElement('a');
+                // Créer un objet Blob contenant le contenu
+                const blob = new Blob([outputContent], { type: 'text/plain' });
+                // Définir le lien de téléchargement
+                downloadLink.href = URL.createObjectURL(blob);
+                // Définir le nom de fichier
+                downloadLink.download = fileName + '.txt'; // Ajouter l'extension .txt
+                // Clic automatique sur le lien pour déclencher le téléchargement
+                downloadLink.click();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

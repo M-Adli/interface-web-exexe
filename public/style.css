@@ -1,0 +1,239 @@
+/* Ajustements généraux */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ECEFF1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Titre */
+#title-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+h1 {
+    color: #BF360C;
+    font-size: 3rem;
+    margin: 0;
+}
+
+/* Conteneur principal */
+#main-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1400px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Panneaux gauche et droit */
+#left-panel, #right-panel {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+/* Conteneur pour les boutons de choix */
+#goals-container, #forme-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+   
+}
+
+/* Boutons, sélecteurs et champ de texte */
+button, input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Boutons */
+button {
+    background-color: #1E88E5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Résultats */
+#right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#output, #output1 {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 95%;
+    min-height: 350px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    overflow-y: auto;
+    order: 2; /* Assure que les résultats restent sous le bouton Exécuter */
+}
+
+/* Étiquettes */
+#left-panel p, #right-panel p {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Boutons personnalisés */
+.custom-button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    background-color: #1E88E5;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.custom-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#customGoalContainer {
+    display: flex;
+    align-items: center; /* Alignement vertical des éléments */
+    gap: 10px; /* Espacement entre les éléments */
+}
+
+#customGoalContainer button {
+   min-width: 100px;
+   background-color: #BF360C;
+}
+
+#customGoal {
+    width: 400px; /* Largeur  */
+   
+}
+
+#choix-du-but {
+    display: flex;
+    align-items: center; /* Alignement vertical des éléments */
+    gap: 10px; /* Espacement entre les éléments */
+    
+}
+
+#choix-du-but .button-container {
+    display: flex; /* Utilisation de flexbox */
+    flex-wrap: wrap; /* Les boutons se mettront automatiquement sur une nouvelle ligne si l'espace est insuffisant */
+    gap: 10px; /* Espacement entre les boutons */
+    justify-content: space-around; /* Répartit les boutons sur la ligne */
+    
+}
+
+#choix-du-but  button {
+    flex: 1; /* Les boutons prennent autant d'espace que possible */
+    min-width: 40px; /* Largeur minimale des boutons */
+}
+
+
+
+
+
+#execution-affichage-container {
+    display: flex;
+    align-items: center; /* Alignement vertical des éléments */
+    gap: 10px; /* Espacement entre les éléments */
+}
+#execution-affichage-container button {
+    flex: 1; /* Les boutons prennent autant d'espace que possible */
+    min-width: 100%; /* taille minimale */
+    
+}
+
+
+
+/* Ajouts spécifiques pour les nouveaux éléments */
+#afficher-code-exemples button {
+    background-color: #4CAF50;
+    color: white;
+   
+}
+
+
+/* Style spécifique pour le bouton Exécuter */
+#execution-container  button {
+    width: 90%; /* Les boutons prennent  90% de la largeur  */
+    min-height: 60px;
+    min-width: 159px; /* Largeur minimale des boutons */
+    background-color: #BF360C;
+}
+
+/* Style spécifique pour le bouton Afficher code */
+#afficher-code-exemples button {
+    width: 90%; /*Les boutons prennent  90% de la largeur  */
+    min-width: 159px; /* Largeur minimale des boutons */
+    min-height: 60px;
+}
+
+/* Style spécifique pour le bouton Afficher en plein écran */
+#affichage-ecran button {
+    width: 90%; /* Les boutons prennent  90% de la largeur */
+    min-height: 60px;
+    min-width: 159px; /* Largeur minimale des boutons */
+}
+/* Style spécifique pour le bouton Afficher le script */
+#afficher-script button {
+    width: 90%; /* Les boutons prennent  90% de la largeur */
+    min-width: 159px; /* Largeur minimale des boutons */
+    background-color: #bec709;
+    color: white;
+    min-height: 60px;
+   
+}
+
+#choix-variable-induction-structurelle button,
+#confirmation button {
+    flex: 1; /* Les boutons prennent autant d'espace que possible */
+    min-width: 120px; /* Largeur minimale des boutons */
+}
+
+
+#ruleSelect {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes de largeur égale */
+    gap: 10px; /* Espacement entre les boutons */
+}
+
+#ruleSelect button {
+        flex: 1; /* Les boutons prennent autant d'espace que possible */
+        min-width: 40px; /* Largeur minimale des boutons */
+    }
+
+/* Affichage écran */
+#affichage-ecran button {
+    background-color: #FFC107;
+    color:white;
+   
+}
+
+
