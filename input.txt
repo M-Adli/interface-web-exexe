@@ -1,13 +1,11 @@
 init.
-app(X,Y,Z)=>leng(Z,?(T)).
+infe(X,Y)=>add(X,?(Z),Y).
 comput.
-postul.
+dci.
 dci.
 simpl.
 o.
 tout_es.
 depl_es.
-o.
-ofin.
+n.
 f.
-

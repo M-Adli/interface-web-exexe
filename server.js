@@ -60,6 +60,43 @@ app.listen(port, async () => {
     }
 });
 
+const executePrologQuery = async (queryText) => {
+    return new Promise((resolve, reject) => {
+        session.query(queryText, {
+            success: () => {
+                session.answers(answer => {
+                    const formattedAnswer = session.format_answer(answer);
+                    resolve(formattedAnswer);
+                });
+            },
+            error: (err) => {
+                reject(new Error('Erreur lors de l\'exécution de la requête Prolog : ' + err.message));
+            }
+        });
+    });
+};
+
+
+// Route POST pour exécuter les requêtes Prolog
+app.post('/execute-prolog', async (req, res) => {
+    const queryText = req.body.query;
+    console.log('Requête Prolog reçue :', queryText);
+
+    try {
+        // Exécuter la requête Prolog
+        const result = await executePrologQuery(queryText);
+        console.log('Résultat de la requête Prolog :', result);
+        
+         // Écrire le résultat dans le fichier output.txt
+         await fs.writeFile('fresult.txt', result);
+        // Envoyer les résultats au format JSON dans la réponse
+        res.json({ results: [result] }); // Envelopper le résultat dans un tableau
+    } catch (error) {
+        console.error('Erreur lors de l\'exécution de la requête Prolog :', error);
+        res.status(500).json({ error: 'Erreur lors de l\'exécution de la requête Prolog' });
+    }
+});
+
 
 
 // Route pour copier but1.txt en but1_copy.txt et renommer but1_copy.txt en input.txt
@@ -228,31 +265,6 @@ app.post('/rename-but5-copy-to-input', async (req, res) => {
 });
 
 
-
-// Route POST pour exécuter les requêtes Prolog
-app.post('/execute-prolog', async (req, res) => {
-    const queryText = req.body.query;
-    console.log('Requête Prolog reçue :', queryText);
-
-    try {
-        // Exécuter la requête Prolog
-        const result = await executePrologQuery(queryText);
-        console.log('Résultat de la requête Prolog :', result);
-        
-         // Écrire le résultat dans le fichier output.txt
-         await fs.writeFile('fresult.txt', result);
-        // Envoyer les résultats au format JSON dans la réponse
-        res.json({ results: [result] }); // Envelopper le résultat dans un tableau
-    } catch (error) {
-        console.error('Erreur lors de l\'exécution de la requête Prolog :', error);
-        res.status(500).json({ error: 'Erreur lors de l\'exécution de la requête Prolog' });
-    }
-});
-
-
-
-
-
 // route GET pour récupérer le contenu du fichier output.txt
 app.get('/get-output', async (req, res) => {
     try {
@@ -336,7 +348,7 @@ app.post('/write', async (req, res) => {
 
 
 
-// Route pour trouver, effacer et ecrire écrire les mots dans le fichier input.txt
+// Route pour trouver, effacer et écrire les mots dans le fichier input.txt
 app.post('/write1', async (req, res) => {
     const { word } = req.body;
 
@@ -387,18 +399,4 @@ app.get('/tree.html', (req, res) => {
 
 
 
-const executePrologQuery = async (queryText) => {
-    return new Promise((resolve, reject) => {
-        session.query(queryText, {
-            success: () => {
-                session.answers(answer => {
-                    const formattedAnswer = session.format_answer(answer);
-                    resolve(formattedAnswer);
-                });
-            },
-            error: (err) => {
-                reject(new Error('Erreur lors de l\'exécution de la requête Prolog : ' + err.message));
-            }
-        });
-    });
-};
+
