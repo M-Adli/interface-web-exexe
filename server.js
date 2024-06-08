@@ -17,6 +17,14 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
+// Configuration de BrowserSync
+const bs = browserSync.create();
+bs.init({
+    proxy: "http://localhost:3000",
+    files: ["public/**/*.*"],
+    open: false,
+    notify: false
+});
 
 // Charger le programme Prolog depuis le fichier code4.pl
 const loadPrologProgram = async () => {
@@ -28,22 +36,6 @@ const loadPrologProgram = async () => {
         throw new Error('Erreur lors de la lecture du fichier Prolog : ' + err.message);
     }
 };
-
-
-
-
-
-// Configuration de BrowserSync
-const bs = browserSync.create();
-bs.init({
-    proxy: "http://localhost:3000",
-    files: ["public/**/*.*"],
-    open: false,
-    notify: false
-});
-
-
-
 
 
 // Charger le programme Prolog au démarrage du serveur

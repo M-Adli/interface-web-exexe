@@ -36,7 +36,7 @@ read_exexe(X) :-  % modification
     ),
     % Lire une ligne à partir du flux de fichier
     read_line(Stream, Line),nl,
-    % Fermer le flux de fichier s'il est à la fin
+    % Fermer le flux de fichier s'''il est à la fin
     (   Line == end_of_file ->
         close_file_stream,
         delete_file('input.txt') % Supprimer le fichier
