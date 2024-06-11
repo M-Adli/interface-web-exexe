@@ -1,3 +1,26 @@
+async function effacerEtExecuter() {
+    try {
+        // Envoyer une requête pour effacer le contenu du fichier output.txt
+        const effacementResponse = await fetch('/effacer-output', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!effacementResponse.ok) {
+            throw new Error('Erreur lors de l\'effacement du fichier output.txt');
+        }
+         // Effacer le contenu de la fenêtre output
+         document.getElementById('output').innerText = '';
+
+        // Une fois le fichier effacé, appeler la fonction sendQuery() pour exécuter la requête Prolog
+        await sendQuery();
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'effacement et de l\'exécution de la requête Prolog :', error);
+    }
+}
 
 // Fonction pour envoyer la requête Prolog au serveur via une requête HTTP POST
 async function sendQuery() {

@@ -79,7 +79,7 @@ app.post('/execute-prolog', async (req, res) => {
         const result = await executePrologQuery(queryText);
         console.log('Résultat de la requête Prolog :', result);
         
-         // Écrire le résultat dans le fichier output.txt
+         // Écrire le résultat dans le fichier fresult.txt
          await fs.writeFile('fresult.txt', result);
         // Envoyer les résultats au format JSON dans la réponse
         res.json({ results: [result] }); // Envelopper le résultat dans un tableau
@@ -269,6 +269,11 @@ app.get('/get-output', async (req, res) => {
 });
 
 
+
+
+
+
+
 // Route pour servir le contenu de code_exemples.pl
 app.get('/get-code-exemples', async (req, res) => {
     try {
@@ -387,6 +392,22 @@ app.post('/write2', async (req, res) => {
 app.get('/tree.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'tree.html'));
   });
+
+
+
+// Route POST pour effacer le contenu du fichier output.txt
+app.post('/effacer-output', async (req, res) => {
+    try {
+        // Effacer le contenu du fichier output.txt
+        const outputFile = 'output.txt';
+        await fs.writeFile(outputFile, '');
+        res.sendStatus(200); // Réponse indiquant que l'effacement a réussi
+    } catch (error) {
+        console.error('Erreur lors de l\'effacement du fichier output.txt :', error);
+        res.status(500).json({ error: 'Erreur lors de l\'effacement du fichier output.txt' });
+    }
+});
+
 
 
 
