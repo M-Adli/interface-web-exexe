@@ -1,5 +1,1 @@
 init.
-app(X,Y,?(Z))&leng(?(Z),?(T)).
-struct.
-2.
-postul.
