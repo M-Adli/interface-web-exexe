@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+
 <head>
-    <title>Écran</title>
+    <meta charset="UTF-8">
+    <title data-i18n="screenTitle">Écran</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <style>
         /* Styles de base */
@@ -38,9 +40,10 @@
                 opacity: 0;
                 transform: translateY(-50px);
             }
+
             to {
                 opacity: 1;
-                transform: translateY(50);
+                transform: translateY(0);
             }
         }
 
@@ -51,61 +54,83 @@
 
         /* Style pour les lignes commençant par ">>" */
         .output-container span.red-text {
-    color: #d32f2f; /* Couleur rouge plus spécifique (rouge vif) */
-    font-weight: bold; /* Texte en gras */
-    font-size: 1.1rem; /* Taille de police légèrement plus grande */
-    letter-spacing: 0.5px; /* Espacement entre les lettres */
-    margin-top: 10px; /* Ajoute de l'espacement au-dessus de l'élément */
-    display: block; /* Chaque ligne de texte rouge occupera sa propre ligne */
-    /*white-space: pre-wrap; /* Permet de gérer l'espace blanc et les retours à la ligne */
-}
+            color: #d32f2f; /* Couleur rouge plus spécifique (rouge vif) */
+            font-weight: bold; /* Texte en gras */
+            font-size: 1.1rem; /* Taille de police légèrement plus grande */
+            letter-spacing: 0.5px; /* Espacement entre les lettres */
+            margin-top: 10px; /* Ajoute de l'espacement au-dessus de l'élément */
+            display: block; /* Chaque ligne de texte rouge occupera sa propre ligne */
+        }
 
-
- /* Style du bouton de retour */
- #backButton {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+        /* Style des boutons */
+        .button {
             padding: 10px 20px;
-            background-color: #007BFF; /* Bleu */
-            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            margin: 5px;
+        }
+
+        #backButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #007BFF; /* Bleu */
+            color: white;
         }
 
         #backButton:hover {
             background-color: #0056b3; /* Couleur plus foncée lors du survol */
         }
 
-        /* Style du bouton Enregistrer */
         #saveButton {
             position: absolute;
             top: 10px;
             right: 10px;
-            padding: 10px 20px;
             background-color: #28a745; /* Vert */
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
         }
 
         #saveButton:hover {
             background-color: #218838; /* Couleur plus foncée lors du survol */
         }
 
+        #language-switcher {
+            position: absolute;
+            top: 10px;
+            right: 110px;
+        }
+
+        .language-button {
+            background-color: #ffc107; /* Jaune */
+            color: white;
+        }
+
+        .language-button:hover {
+            background-color: #e0a800; /* Couleur plus foncée lors du survol */
+        }
     </style>
 </head>
+
 <body>
-    <button id="backButton">Revenir à l'index</button>
-    <button id="saveButton">Enregistrer</button>
+
+    <div id="language-switcher">
+        <button class="button language-button" onclick="changeLanguage('fr')">Français</button>
+        <button class="button language-button" onclick="changeLanguage('en')">English</button>
+    </div>
+
+    <button id="backButton" class="button" data-i18n="backButton">Revenir à l'index</button>
+    <button id="saveButton" class="button" data-i18n="saveButton">Enregistrer</button>
+
     <!-- Conteneur pour afficher les résultats -->
     <div class="output-container" id="output">
         <!-- Les résultats seront affichés ici -->
     </div>
+
+    <script src="https://unpkg.com/i18next@21.6.15/dist/umd/i18next.min.js"></script>
+    <script src="https://unpkg.com/i18next-browser-languagedetector@6.1.3/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
+    <script src="i18n.js"></script>
 
     <script>
         // Fonction pour récupérer et afficher les résultats
@@ -124,23 +149,23 @@
                 // Effacer le contenu existant
                 outputElement.innerHTML = '';
                 
-           // Parcourir chaque ligne, sauf les deux dernières, et ajouter le style approprié
-        for (let i = 0; i < lignes.length - 2; i++) {
-            const ligne = lignes[i];
-            const span = document.createElement('span');
+                // Parcourir chaque ligne, sauf les deux dernières, et ajouter le style approprié
+                for (let i = 0; i < lignes.length - 2; i++) {
+                    const ligne = lignes[i];
+                    const span = document.createElement('span');
 
-            // Vérifier si la ligne commence par ">>"
-            if (ligne.startsWith('>>')) {
-                span.className = 'red-text';
-            }
+                    // Vérifier si la ligne commence par ">>"
+                    if (ligne.startsWith('>>')) {
+                        span.className = 'red-text';
+                    }
 
-            span.textContent = ligne;
-            outputElement.appendChild(span);
-            outputElement.appendChild(document.createElement('br'));
-        }
-    }else {
+                    span.textContent = ligne;
+                    outputElement.appendChild(span);
+                    outputElement.appendChild(document.createElement('br'));
+                }
+            } else {
                 // Gérer les cas où les résultats ne sont pas disponibles
-                document.getElementById('output').innerText = 'Aucun résultat disponible.';
+                document.getElementById('output').innerText = i18next.t('resultsDisplay');
             }
         }
 
@@ -158,7 +183,7 @@
             const outputContent = document.getElementById('output').innerText;
             
             // Créer une fenêtre de dialogue pour saisir le nom du fichier
-            const fileName = window.prompt("Saisissez le nom du fichier :");
+            const fileName = window.prompt(i18next.t('enterFileNamePrompt'));
             
             // Vérifier si un nom de fichier a été saisi
             if (fileName !== null && fileName !== "") {
@@ -175,6 +200,35 @@
             }
         });
 
+        // Fonction pour mettre à jour le contenu traduit
+        function updateContent() {
+            document.querySelectorAll('[data-i18n]').forEach(function(element) {
+                var key = element.getAttribute('data-i18n');
+                element.innerHTML = i18next.t(key);
+            });
+        }
+
+        // Fonction pour changer de langue
+        function changeLanguage(lng) {
+            localStorage.setItem('language', lng);
+            i18next.changeLanguage(lng, function(err, t) {
+                if (err) return console.log('something went wrong loading', err);
+                updateContent();
+                afficherResultats(); // Mettre à jour les résultats après le changement de langue
+            });
+        }
+
+        // Appliquer la langue stockée au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            var language = localStorage.getItem('language') || 'fr';
+            i18next.changeLanguage(language, function(err, t) {
+                if (err) return console.log('something went wrong loading', err);
+                updateContent();
+                afficherResultats(); // Mettre à jour les résultats après le chargement de la langue
+            });
+        });
+
     </script>
 </body>
+
 </html>

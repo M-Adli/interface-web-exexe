@@ -10,6 +10,27 @@ body {
     justify-content: flex-start;
 }
 
+
+#language-switcher {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.language-button {
+    background-color: #ffc107; /* Jaune */
+    color: white;
+}
+
 /* Titre */
 #title-container {
     width: 100%;

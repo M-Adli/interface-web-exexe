@@ -1,1 +1,13 @@
 init.
+app(X,Y,Z)=>leng(Z,?(T)).
+comput.
+postul.
+dci.
+simpl.
+o.
+tout_es.
+depl_es.
+o.
+ofin.
+f.
+

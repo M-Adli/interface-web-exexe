@@ -1,1 +1,1 @@
-uncaught exception: error(existence_error(procedure,delete_file/1),,/2)
+true

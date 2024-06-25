@@ -1,76 +1,60 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Exexe</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 </head>
+
 <body>
-    <div id="title-container">
-        <h1>Le système Exexe</h1>
+    <div id="language-switcher">
+        <button class="button language-button" onclick="changeLanguage('fr')">Français</button>
+        <button class="button language-button" onclick="changeLanguage('en')">English</button>
     </div>
-    
+
+    <div id="title-container">
+        <h1 data-i18n="title">Le système Exexe</h1>
+    </div>
+
     <div id="main-container">
-       
         <div id="left-panel">
-            <p>But avec script prédéfini</p>
-            <!-- Boutons pour les buts initiaux -->
+            <p data-i18n="goal_with_script">But avec script prédéfini</p>
             <div id="goals-container">
                 <button onclick="renameBut1ToInput();envoyerMot('G2')">app(X,Y,Z)=>leng(Z,?(T)).</button>
                 <button onclick="renameBut2ToInput();envoyerMot('G1')">app(X,Y,?(Z))&leng(?(Z),?(T)).</button>
                 <button onclick="renameBut3ToInput();envoyerMot('G1')">leng(X,?(L))&leng(?(Y),?(L)).</button>
                 <button onclick="renameBut4ToInput();envoyerMot('G2')">infe(X,Y)=>add(X,?(Z),Y).</button>
-                <!--button onclick="renameBut5ToInput()">fib(X,?Y) & fib(s(X),?(Z)).</button -->
             </div>
-
 
             <div id="execution-affichage-container">
-                <!-- Exécuter -->
                 <div id="execution-container" class="button-container">
-                  <button class="custom-button" onclick="effacerEtExecuter()">Exécuter</button>
+                    <button class="custom-button" onclick="effacerEtExecuter()" data-i18n="execute">Exécuter</button>
                 </div>
-
-                <!-- Affichage écran -->
                 <div id="affichage-ecran" class="button-container">
-                    <button class="custom-button" onclick="afficherEcran()">Afficher la trace</button>
+                    <button class="custom-button" onclick="afficherResultats()" data-i18n="display_trace">Afficher la trace</button>
                 </div>
-
-                <!-- Bouton Afficher code_exemples.pl -->
-                <div id="afficher-code-exemples" class="button-container">    
-                  <button class="custom-button" onclick="afficherCodeExemples()">Afficher les exemples Prolog</button>
+                <div id="afficher-code-exemples" class="button-container">
+                    <button class="custom-button" onclick="afficherCodeExemples()" data-i18n="display_examples">Afficher les exemples Prolog</button>
                 </div>
-
-
-                 <!-- Bouton Afficher le script Prolog -->
                 <div id="afficher-script" class="button-container">
-                    <button class="custom-button" onclick="afficherScript()">Afficher le script Exexe</button>
-                 </div> 
-                
-                
+                    <button class="custom-button" onclick="afficherScript()" data-i18n="display_script">Afficher le script Exexe</button>
                 </div>
-
-
-
-                
-
-
-                  <!-- Affichage des résultats -->
-        <div id="output">La trace s'affiche ici :</div>
-        </div>
-            
-        <div id="right-panel">
-            <p>Construction de script</p>
-            <div id="customGoalContainer">
-                <!-- Bouton initialisation-->
-                <button class="custom-button" onclick="envoyerMot1('init.')">Initialisation</button>
-                <!-- Champ de texte pour saisir un but initial personnalisé -->
-                <input type="text" id="customGoal" placeholder="Entrez un but initial">
-                <!-- Bouton Envoyer pour le but initial personnalisé -->
-                <button class="custom-button" onclick="envoyerMot2(document.getElementById('customGoal').value)">Envoyer</button>
             </div>
-            
-            <!-- Choix du but -->
-            <p>Choix du but :</p>
+
+            <div id="output" data-i18n="trace_display">La trace s'affiche ici :</div>
+        </div>
+
+        <div id="right-panel">
+            <p data-i18n="script_construction">Construction de script</p>
+            <div id="customGoalContainer">
+                <button class="custom-button" onclick="envoyerMot1('init.')" data-i18n="initialization">Initialisation</button>
+                <input type="text" id="customGoal" placeholder="Entrez un but initial" data-i18n="[placeholder]enter_initial_goal">
+                <button class="custom-button" onclick="envoyerMot2(document.getElementById('customGoal').value)" data-i18n="send">Envoyer</button>
+            </div>
+
+            <p data-i18n="goal_choice">Choix du but :</p>
             <div id="choix-du-but" class="button-container">
                 <button class="custom-button" value="G1." onclick="envoyerMot('G1')">G1</button>
                 <button class="custom-button" value="G2." onclick="envoyerMot('G2')">G2</button>
@@ -80,9 +64,8 @@
                 <button class="custom-button" value="H2." onclick="envoyerMot('H2')">H2</button>
                 <button class="custom-button" value="H3." onclick="envoyerMot('H2')">H3</button>
             </div>
-            
-            <!-- Règle -->
-            <p>Règle :</p>
+
+            <p data-i18n="rule">Règle :</p>
             <div id="ruleSelect">
                 <button class="custom-button" value="dci." onclick="envoyerMot2('dci.')">dci</button>
                 <button class="custom-button" value="simpl." onclick="envoyerMot2('simpl.')">simpl</button>
@@ -91,46 +74,57 @@
                 <button class="custom-button" value="postul." onclick="envoyerMot2('postul.')">postul</button>
                 <button class="custom-button" value="tout_es." onclick="envoyerMot2('tout_es.')">tout_es</button>
                 <button class="custom-button" value="depl_es." onclick="envoyerMot2('depl_es.')">depl_es</button>
-                <button class="custom-button" value="g." onclick="envoyerMot2('g.')">guide</button>
             </div>
 
-            <!-- Choix de la variable d'induction structurelle -->
             <div id="choix-variable-induction-structurelle">
-                <p>Choix de la variable d'induction structurelle :</p>
+                <p data-i18n="structural_induction_variable">Choix de la variable d'induction structurelle :</p>
                 <button class="custom-button" value="1." onclick="envoyerMot2('1.')">1</button>
                 <button class="custom-button" value="2." onclick="envoyerMot2('2.')">2</button>
                 <button class="custom-button" value="3." onclick="envoyerMot2('3.')">3</button>
                 <button class="custom-button" value="4." onclick="envoyerMot2('4.')">4</button>
                 <button class="custom-button" value="5." onclick="envoyerMot2('5.')">5</button>
             </div>
-            <!-- Confirmation -->
+
             <div id="confirmation">
-                <p>Confirmation :</p>
+                <p data-i18n="confirmation">Confirmation :</p>
                 <button class="custom-button" value="o." onclick="envoyerMot2('o.')">o</button>
                 <button class="custom-button" value="ofin." onclick="envoyerMot2('ofin.')">ofin</button>
                 <button class="custom-button" value="n." onclick="envoyerMot2('n.')">n</button>
                 <button class="custom-button" value="nfin." onclick="envoyerMot2('nfin.')">nfin</button>
                 <button class="custom-button" value="fin." onclick="envoyerMot2('fin.')">fin</button>
             </div>
-           <!--button onclick="window.location.href='tree.html'">Créer arbre</button-->
         </div>
-       
     </div>
 
-    <script>
-        function afficherEcran() {
-            // Récupérer les résultats de la fenêtre output
-            const resultats = document.getElementById('output').innerText;
-            
-            // Stocker les résultats dans le stockage local
-            localStorage.setItem('resultatsOutput', resultats);
-            
-            // Rediriger vers ecran.html
-            window.location.href = 'ecran.html';
-        }
-    </script>
-    <!-- Vos scripts et liens vers les fichiers JavaScript -->
+    <script src="https://unpkg.com/i18next@21.6.15/dist/umd/i18next.min.js"></script>
+    <script src="https://unpkg.com/i18next-browser-languagedetector@6.1.3/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
+    <script src="i18n.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script.js" type="text/javascript"></script>
+    <script>
+        function changeLanguage(lng) {
+            localStorage.setItem('language', lng);
+            i18next.changeLanguage(lng, function (err, t) {
+                if (err) return console.log('something went wrong loading', err);
+                updateContent();
+            });
+        }
+
+        function updateContent() {
+            document.querySelectorAll('[data-i18n]').forEach(function (element) {
+                var key = element.getAttribute('data-i18n');
+                element.innerHTML = i18next.t(key);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var language = localStorage.getItem('language') || 'fr';
+            i18next.changeLanguage(language, function (err, t) {
+                if (err) return console.log('something went wrong loading', err);
+                updateContent();
+            });
+        });
+    </script>
 </body>
+
 </html>

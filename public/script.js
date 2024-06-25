@@ -121,6 +121,13 @@ async function fetchOutput() {
 }
 
 
+
+
+
+
+
+
+
 function afficherCodeExemples() {
     // Rediriger vers ecran.html
     window.location.href = 'code.html';
@@ -129,7 +136,9 @@ function afficherScript(){
     window.location.href ='script.html';
 }
 
-
+function afficherResultats(){
+    window.location.href = 'ecran.html'
+}
 
 
 
