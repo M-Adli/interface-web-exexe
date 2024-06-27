@@ -1,0 +1,110 @@
+>>>>>>>>>> REGLE: init
+>>>>>>>>>> BUT:app(X,Y,?(Z))&leng(?(Z),?(A1))
+ but initial:
+(F)app(X,Y,?(Z))&leng(?(Z),?(T))
+>>>>>>>>>> REGLE: struct
+>> choisissez une variable d'induction structurelle: 
+Y
+ : term(Y)
+X
+ : lst(X)
+2
+ nouveaux buts:
+(G1)app([],Y,?(Z))&leng(?(Z),?(T))
+(G2)(app(X,Y,W)&leng(W,V))=>(app([U|X],Y,?(Z))&leng(?(Z),?(T)))
+ clauses associees:
+(es_F([],Y,Z,T):-es_G1(Y,Z,T))
+(es_F([U|X],Y,Z,T):-es_F(X,Y,W,V),es_G2(X,Y,W,V,U,Z,T))
+>>quel but ?
+G1: app([],Y,?(Z))&leng(?(Z),?(T))
+G2: (app(X,Y,W)&leng(W,V))=>(app([U|X],Y,?(Z))&leng(?(Z),?(T)))
+G1
+>>>>>>>>>> REGLE: postul
+ clause associee:
+(es_G1(Y,Z,T):-app([],Y,Z),leng(Z,T))
+>>>>1 succes partiels   
+nouveau but courant: 
+(G2)(app(X,Y,W)&leng(W,V))=>(app([U|X],Y,?(Z))&leng(?(Z),?(T)))
+>>>>>>>>>> REGLE: dci
+ 
+atome positif choisi : 
+app([U|X],Y,?(Z))
+ nouveaux buts:
+(H)(app(X,Y,W)&leng(W,V))=>(app(X,Y,?(Z))&leng([U|?(Z)],?(T)))
+ clause associee:
+(es_G2(X,Y,W,V,U,[U|Z],T):-es_H(X,Y,W,V,Z,U,T))
+  
+nouveau but courant: 
+(H)(app(X,Y,W)&leng(W,V))=>(app(X,Y,?(Z))&leng([U|?(Z)],?(T)))
+>>>>>>>>>> REGLE: simpl
+   
+paire d atomes choisie : 
+app(X,Y,W),app(X,Y,?(Z))
+>> confirmation (o/n):o
+ nouveaux buts:
+(I)leng(Z,V)=>leng([U|Z],?(T))
+ clause associee:
+(es_H(X,Y,Z,V,Z,U,T):-es_I(Z,V,U,T))
+  
+nouveau but courant: 
+(I)leng(Z,V)=>leng([U|Z],?(T))
+>>>>>>>>>> REGLE: dci
+ 
+atome positif choisi : 
+leng([U|Z],?(T))
+ nouveaux buts:
+(J)leng(Z,V)=>leng(Z,?(T))
+ clause associee:
+(es_I(Z,V,U,s(T)):-es_J(Z,V,T))
+  
+nouveau but courant: 
+(J)leng(Z,V)=>leng(Z,?(T))
+>>>>>>>>>> REGLE: simpl
+   
+paire d atomes choisie : 
+leng(Z,V),leng(Z,?(T))
+>> confirmation (o/n):o
+ nouveaux buts:
+ vrai
+ clause associee:
+es_J(Z,T,T)
+>>>>>>>>>> succes total!
+>>>> Voulez-vous voir toutes les clauses d'entree-sortie (tout_es)
+>>>> ou seulement leur simplification par depliages (depl_es) ? 
+>>>>>>>>>> REGLE: tout_es
+ but prouve:
+(F)app(X,Y,?(Z))&leng(?(Z),?(T))
+   
+ predicat associe: 
+es_F(X,Y,Z,T)
+   
+clauses collectees: 
+(es_F([],Y,Z,T):-es_G1(Y,Z,T))
+(es_F([U|X],Y,Z,T):-es_F(X,Y,W,V),es_G2(X,Y,W,V,U,Z,T))
+(es_G1(Y,Z,T):-app([],Y,Z),leng(Z,T))
+(es_G2(X,Y,W,V,U,[U|Z],T):-es_H(X,Y,W,V,Z,U,T))
+(es_H(X,Y,Z,V,Z,U,T):-es_I(Z,V,U,T))
+(es_I(Z,V,U,s(T)):-es_J(Z,V,T))
+es_J(Z,T,T)
+>>>>>>>>>> REGLE: depl_es
+but prouve:
+(F)app(X,Y,?(Z))&leng(?(Z),?(T))
+     
+predicat associe: 
+es_F(X,Y,Z,T)
+     
+ clauses d'entree-sortie apres depliages: 
+(es_F([],Y,Z,T):-app([],Y,Z),leng(Z,T))
+(es_F([U|X],Y,[U|Z],s(T)):-es_F(X,Y,Z,T))
+>>>> Voulez-vous tronquer es_F (o/n) ? 
+o
+>>>> par rapport a l'argument numero 3 (o/n/ofin/nfin) ? ofin
+ clauses d'entree-sortie tronquees: 
+(es_F([],Y,T):-app([],Y,Z),leng(Z,T))
+(es_F([U|X],Y,s(T)):-es_F(X,Y,T))
+>>>> Fin de la synthese.
+>>>> Vous pouvez commencer une autre preuve (g. pour etre aide).
+>>>>>>>>>> REGLE: f
+ciao.
+>>>> Utiliser: tout_es, depl_es, f/fin.
+>>>>>>>>>> REGLE: 

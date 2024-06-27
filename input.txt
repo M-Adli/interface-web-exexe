@@ -1,1 +1,16 @@
 init.
+app(X,Y,?(Z))&leng(?(Z),?(T)).
+struct.
+2.
+postul.
+dci.
+simpl.
+o.
+dci.
+simpl.
+o.
+tout_es.
+depl_es.
+o.
+ofin.
+f.
