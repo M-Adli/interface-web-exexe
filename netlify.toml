@@ -1,11 +1,12 @@
 [build]
-  command = "npm run build" # Commande pour construire votre application si nécessaire
-  functions = "functions"   # Répertoire contenant les fonctions Netlify si vous en utilisez
+  # Branch to deploy
+  base = "main"  # ou la branche que vous utilisez pour le développement principal
 
-[dev]
-  command = "npm run start" # Commande pour démarrer le serveur de développement
+  # Build command
+  command = "npm run build"  # ou toute autre commande spécifiée dans vos scripts package.json pour construire votre application
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  # Directory with build output
+  publish = "public"  # le répertoire où les fichiers statiques sont générés après la construction (par exemple, public, dist, etc.)
+
+  # Optional: Functions directory if using Netlify functions (Lambda functions)
+  # functions = "functions"  # le répertoire contenant les fonctions Netlify (facultatif)
