@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build" # Commande pour construire votre application si nécessaire
+  functions = "functions"   # Répertoire contenant les fonctions Netlify si vous en utilisez
+
+[dev]
+  command = "npm run start" # Commande pour démarrer le serveur de développement
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
